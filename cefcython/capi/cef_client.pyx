@@ -45,6 +45,7 @@ cdef int on_process_message_received(
 
 cdef void initialize_cef_client(cef_client_t *client):
     client.base.size = sizeof(cef_client_t)
+    initialize_cef_base_ref_counted(<cef_base_ref_counted_t *>client)
     client.get_context_menu_handler = get_context_menu_handler
     client.get_dialog_handler = get_dialog_handler
     client.get_display_handler = get_display_handler

@@ -1,13 +1,9 @@
 from libc.stddef cimport size_t
 
-from cef_string cimport cef_string_t
-from cef_client cimport _cef_settings_t
-
-cdef extern from "include/capi/cef_base_capi.h":
-    cdef struct _cef_base_ref_counted_t:
-        size_t size
-
-    ctypedef _cef_base_ref_counted_t cef_base_ref_counted_t
+from cefcython.capi.cef_string cimport cef_string_t
+from cefcython.capi.cef_types cimport _cef_settings_t
+from cefcython.capi.cef_base cimport (cef_base_ref_counted_t,
+                                      initialize_cef_base_ref_counted)
 
 cdef extern from "include/internal/cef_types_linux.h":
     cdef struct _cef_main_args_t:
@@ -63,7 +59,7 @@ cdef extern from "include/capi/cef_app_capi.h":
     void cef_run_message_loop()
     void cef_do_message_loop_work()
     void cef_shutdown()
-    void cef_execute_process(
+    int cef_execute_process(
             const _cef_main_args_t *args,
             cef_app_t *application,
             void *windows_sandbox_info)

@@ -23,6 +23,7 @@ cdef _cef_render_process_handler_t *get_render_process_handler(
 
 cdef void initialize_cef_app(cef_app_t *app):
     app.base.size = sizeof(cef_app_t)
+    initialize_cef_base_ref_counted(<cef_base_ref_counted_t *>app)
     app.on_before_command_line_processing = on_before_command_line_processing
     app.on_register_custom_schemes = on_register_custom_schemes
     app.get_resource_bundle_handler = get_resource_bundle_handler

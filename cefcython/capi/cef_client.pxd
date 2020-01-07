@@ -1,53 +1,7 @@
 from libc.stddef cimport size_t
-from cef_string cimport cef_string_t
-
-cdef extern from "include/internal/cef_types.h":
-    ctypedef enum cef_process_id_t:
-        pass
-
-    ctypedef enum cef_log_severity_t:
-        LOGSEVERITY_DEFAULT,
-        LOGSEVERITY_VERBOSE,
-        LOGSEVERITY_DEBUG = LOGSEVERITY_VERBOSE,
-        LOGSEVERITY_INFO,
-        LOGSEVERITY_WARNING,
-        LOGSEVERITY_ERROR,
-        LOGSEVERITY_FATAL,
-        LOGEVERITY_DISABLE=99
-
-    cdef struct _cef_settings_t:
-        pass
-
-    ctypedef _cef_settings_t cef_settings_t
-
-    cdef struct _cef_browser_settings_t:
-        pass
-
-    ctypedef _cef_browser_settings_t cef_browser_settings_t
-
-cdef extern from "include/internal/cef_types_linux.h":
-    ctypedef unsigned long cef_window_handle_t
-
-    ctypedef struct cef_window_info_t:
-        cef_string_t window_name
-
-        unsigned int x, y
-        unsigned int width, height
-
-        cef_window_handle_t parent_window
-
-        int windowless_rendering_enabled
-        int shared_texture_enabled
-        int external_begin_frame_enabled
-
-        cef_window_handle_t window
-
-
-cdef extern from "include/capi/cef_base_capi.h":
-    cdef struct _cef_base_ref_counted_t:
-        size_t size
-
-    ctypedef _cef_base_ref_counted_t cef_base_ref_counted_t
+from cefcython.capi.cef_string cimport cef_string_t
+from cefcython.capi.cef_base cimport cef_base_ref_counted_t, initialize_cef_base_ref_counted
+from cefcython.capi.cef_types cimport cef_process_id_t
 
 cdef extern from "include/capi/cef_client_capi.h":
     cdef struct _cef_client_t:
