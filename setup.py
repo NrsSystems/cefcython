@@ -1,5 +1,5 @@
-from distutils.core import setup
-from distutils.extension import Extension
+from setuptools import setup, find_packages
+from setuptools.extension import Extension
 
 from Cython.Build import cythonize
 
@@ -28,7 +28,17 @@ package_data={
     'cefcython.util': ['*.pxd'],
 }
 
+from cefcython import __version__ as version
+
 setup(
+    name='cefcython',
+    version=version,
+    author='Joseph Kogut',
+    author_email='joseph.kogut@gmail.com',
+    description='Cython bindings for CEF',
+    install_requires=['cython'],
+    packages=find_packages(),
     package_data=package_data,
     ext_modules=cythonize(extensions),
+    zip_safe=False,
 )
