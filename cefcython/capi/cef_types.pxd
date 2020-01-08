@@ -1,7 +1,7 @@
 from libc.stddef cimport size_t
 from libc.stdint cimport uint32_t
 
-from cef_string cimport cef_string_t
+from cefcython.capi.cef_string cimport cef_string_t
 
 cdef extern from "include/internal/cef_types.h":
     ctypedef uint32_t cef_color_t
