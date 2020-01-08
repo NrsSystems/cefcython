@@ -23,6 +23,12 @@ extensions = [
     ),
 ]
 
+package_data={
+    'cefcython.capi': ['*.pxd'],
+    'cefcython.util': ['*.pxd'],
+}
+
 setup(
-    ext_modules=cythonize(extensions)
+    package_data=package_data,
+    ext_modules=cythonize(extensions),
 )
