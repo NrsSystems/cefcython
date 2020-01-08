@@ -60,10 +60,30 @@ class BuildSubprocessCommand(Command):
         self.copy_src()
         self.build()
 
+class BuildCEFCommand(Command):
+    def initialize_options(self):
+        self.build_lib = None
+        self.build_temp = None
+
+    def finalize_options(self):
+        self.set_undefined_options('build',
+                                   ('build_lib', 'build_lib'),
+                                   ('build_temp', 'build_temp'))
+
+    def build(self):
+        self.copy_tree(
+            os.path.join(ROOT_DIR, 'cef'),
+            os.path.join(self.build_lib, os.path.join('cefcython', 'cef'))
+        )
+
+    def run(self):
+        self.build()
+
 class BuildCommand(build):
     def run(self):
         build.run(self)
         self.run_command('build_subprocess')
+        self.run_command('build_cef')
 
 from cefcython import __version__ as version
 
@@ -81,5 +101,6 @@ setup(
     cmdclass={
         'build': BuildCommand,
         'build_subprocess': BuildSubprocessCommand,
+        'build_cef': BuildCEFCommand,
     }
 )
