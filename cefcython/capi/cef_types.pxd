@@ -11,6 +11,11 @@ cdef extern from "include/internal/cef_types.h":
         STATE_ENABLED,
         STATE_DISABLED
 
+    cdef struct _cef_pdf_print_settings_t:
+        pass
+
+    ctypedef _cef_pdf_print_settings_t cef_pdf_print_settings_t
+
     cdef struct _cef_browser_settings_t:
         size_t size
         int windowless_frame_rate
@@ -104,10 +109,13 @@ cdef extern from "include/internal/cef_types.h":
 
     ctypedef _cef_settings_t cef_settings_t
 
+    ctypedef enum cef_file_dialog_mode_t:
+        pass
+
 cdef extern from "include/internal/cef_types_linux.h":
     ctypedef unsigned long cef_window_handle_t
 
-    ctypedef struct cef_window_info_t:
+    cdef struct _cef_window_info_t:
         cef_string_t window_name
 
         unsigned int x, y
@@ -120,3 +128,46 @@ cdef extern from "include/internal/cef_types_linux.h":
         int external_begin_frame_enabled
 
         cef_window_handle_t window
+
+    ctypedef _cef_window_info_t cef_window_info_t
+
+    cdef struct _cef_point_t:
+        pass
+
+    ctypedef _cef_point_t cef_point_t
+
+    ctypedef enum cef_paint_element_type_t:
+        pass
+
+    cdef struct _cef_key_event_t:
+        pass
+
+    ctypedef _cef_key_event_t cef_key_event_t
+
+    cdef struct _cef_mouse_event_t:
+        pass
+
+    ctypedef _cef_mouse_event_t cef_mouse_event_t
+
+    cdef struct _cef_composition_underline_t:
+        pass
+
+    ctypedef _cef_composition_underline_t cef_composition_underline_t
+
+    cdef struct _cef_range_t:
+        pass
+
+    ctypedef _cef_range_t cef_range_t
+
+    cdef struct _cef_size_t:
+        pass
+
+    ctypedef _cef_size_t cef_size_t
+
+    ctypedef enum cef_drag_operations_mask_t:
+        pass
+
+    cdef struct _cef_touch_event_t:
+        pass
+
+    ctypedef _cef_touch_event_t cef_touch_event_t
