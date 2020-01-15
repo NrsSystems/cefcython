@@ -71,7 +71,7 @@ cdef extern from "include/internal/cef_types.h":
         LOGSEVERITY_WARNING,
         LOGSEVERITY_ERROR,
         LOGSEVERITY_FATAL,
-        LOGEVERITY_DISABLE=99
+        LOGSEVERITY_DISABLE=99
 
     ctypedef enum cef_process_id_t:
         pass
