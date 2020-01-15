@@ -112,6 +112,38 @@ cdef extern from "include/internal/cef_types.h":
     ctypedef enum cef_file_dialog_mode_t:
         pass
 
+    ctypedef enum cef_referrer_policy_t:
+        pass
+
+    ctypedef enum cef_resource_type_t:
+        pass
+
+    ctypedef enum cef_transition_type_t:
+        pass
+
+    ctypedef enum cef_postdataelement_type_t:
+        pass
+
+    struct _cef_cookie_t:
+        pass
+
+    ctypedef _cef_cookie_t cef_cookie_t
+
+    ctypedef enum cef_errorcode_t:
+        pass
+
+    ctypedef enum cef_urlrequest_status_t:
+        UR_UNKNOWN = 0,
+        UR_SUCCESS,
+        UR_IO_PENDING,
+        UR_CANCELED,
+        UR_FAILED
+
+    ctypedef enum cef_return_value_t:
+        RV_CANCEL = 0,
+        RV_CONTINUE,
+        RV_CONTINUE_ASYNC
+
 cdef extern from "include/internal/cef_types_linux.h":
     ctypedef unsigned long cef_window_handle_t
 
@@ -172,14 +204,3 @@ cdef extern from "include/internal/cef_types_linux.h":
 
     ctypedef _cef_touch_event_t cef_touch_event_t
 
-    ctypedef enum cef_referrer_policy_t:
-        pass
-
-    ctypedef enum cef_resource_type_t:
-        pass
-
-    ctypedef enum cef_transition_type_t:
-        pass
-
-    ctypedef enum cef_postdataelement_type_t:
-        pass
