@@ -11,7 +11,7 @@ import subprocess
 ROOT_DIR = os.path.abspath(os.path.dirname(__file__))
 
 include_dirs=[
-    ROOT_DIR,
+    os.path.join(ROOT_DIR, os.path.join('cefcython', 'build')),
 ]
 
 extensions = [
@@ -30,6 +30,7 @@ extensions = [
 package_data={
     'cefcython.capi': ['*.pxd'],
     'cefcython.util': ['*.pxd'],
+    'cefcython.build': ['**/*.h'],
 }
 
 class BuildSubprocessCommand(Command):
@@ -49,7 +50,7 @@ class BuildSubprocessCommand(Command):
 
     def build(self):
         subprocess_dir = os.path.join(self.build_temp, os.path.join('src', 'subprocess'))
-        cmd = ['make', '-C', subprocess_dir, 'CEF_INCLUDE={}'.format(ROOT_DIR)]
+        cmd = ['make', '-C', subprocess_dir, 'CEF_INCLUDE={}'.format(os.path.join(ROOT_DIR, os.path.join('cefcython', 'build')))]
         if self.force:
             cmd += ['clean', 'all']
         subprocess.check_call(cmd)
