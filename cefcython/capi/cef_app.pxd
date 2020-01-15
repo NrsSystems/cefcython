@@ -2,8 +2,7 @@ from libc.stddef cimport size_t
 
 from cefcython.capi.cef_string cimport cef_string_t
 from cefcython.capi.cef_types cimport _cef_settings_t
-from cefcython.capi.cef_base cimport (cef_base_ref_counted_t,
-                                      initialize_cef_base_ref_counted)
+from cefcython.capi.cef_base cimport cef_base_ref_counted_t
 
 cdef extern from "include/internal/cef_types_linux.h":
     cdef struct _cef_main_args_t:
@@ -81,5 +80,3 @@ cdef _cef_browser_process_handler_t *get_browser_process_handler(
 
 cdef _cef_render_process_handler_t *get_render_process_handler(
         _cef_app_t *self)
-
-cdef void initialize_cef_app(cef_app_t *app)

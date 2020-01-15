@@ -1,6 +1,6 @@
 from libc.stddef cimport size_t
 from cefcython.capi.cef_string cimport cef_string_t
-from cefcython.capi.cef_base cimport cef_base_ref_counted_t, initialize_cef_base_ref_counted
+from cefcython.capi.cef_base cimport cef_base_ref_counted_t
 from cefcython.capi.cef_types cimport cef_process_id_t
 
 cdef extern from "include/capi/cef_client_capi.h":
@@ -106,5 +106,3 @@ cdef int on_process_message_received(
             _cef_frame_t *frame,
             cef_process_id_t source_process,
             _cef_process_message_t *message)
-
-cdef void initialize_cef_client(cef_client_t *client)
