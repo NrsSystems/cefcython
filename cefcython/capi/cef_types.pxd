@@ -50,6 +50,8 @@ cdef extern from "include/internal/cef_types.h":
         cef_color_t background_color
         cef_string_t accept_language_list
 
+    ctypedef _cef_browser_settings_t cef_browser_settings_t
+
     ctypedef enum cef_path_key_t:
         PK_DIR_CURRENT,
         PK_DIR_EXE,
@@ -60,8 +62,6 @@ cdef extern from "include/internal/cef_types.h":
         PK_LOCAL_APP_DATA,
         PK_USER_DATA,
         PK_DIR_RESOURCES
-
-    ctypedef _cef_browser_settings_t cef_browser_settings_t
 
     ctypedef enum cef_log_severity_t:
         LOGSEVERITY_DEFAULT,
