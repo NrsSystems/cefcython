@@ -171,3 +171,6 @@ cdef extern from "include/internal/cef_types_linux.h":
         pass
 
     ctypedef _cef_touch_event_t cef_touch_event_t
+
+    ctypedef enum cef_referrer_policy_t:
+        pass
