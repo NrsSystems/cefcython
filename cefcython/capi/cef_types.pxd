@@ -174,3 +174,6 @@ cdef extern from "include/internal/cef_types_linux.h":
 
     ctypedef enum cef_referrer_policy_t:
         pass
+
+    ctypedef enum cef_resource_type_t:
+        pass
