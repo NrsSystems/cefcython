@@ -12,6 +12,7 @@ from cefcython.capi.cef_path_util cimport *
 from cefcython.capi.cef_request cimport *
 from cefcython.capi.cef_request_callback cimport *
 from cefcython.capi.cef_request_context cimport *
+from cefcython.capi.cef_request_handler cimport *
 from cefcython.capi.cef_response cimport *
 from cefcython.capi.cef_response_filter cimport *
 from cefcython.capi.cef_resource_handler cimport *
