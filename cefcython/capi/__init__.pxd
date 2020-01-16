@@ -15,6 +15,7 @@ from cefcython.capi.cef_request_context cimport *
 from cefcython.capi.cef_response cimport *
 from cefcython.capi.cef_response_filter cimport *
 from cefcython.capi.cef_resource_handler cimport *
+from cefcython.capi.cef_resource_request_handler cimport *
 from cefcython.capi.cef_ssl_info cimport *
 from cefcython.capi.cef_string cimport *
 from cefcython.capi.cef_string_list cimport *
