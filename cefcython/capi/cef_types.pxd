@@ -144,6 +144,9 @@ cdef extern from "include/internal/cef_types.h":
         RV_CONTINUE,
         RV_CONTINUE_ASYNC
 
+    ctypedef enum cef_window_open_disposition_t:
+        pass
+
 cdef extern from "include/internal/cef_types_linux.h":
     ctypedef unsigned long cef_window_handle_t
 
