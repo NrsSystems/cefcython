@@ -147,6 +147,12 @@ cdef extern from "include/internal/cef_types.h":
     ctypedef enum cef_window_open_disposition_t:
         pass
 
+    ctypedef enum cef_termination_status_t:
+        TS_ABNORMAL_TERMINATION,
+        TS_PROCESS_WAS_KILLED,
+        TS_PROCESS_CRASHED,
+        TS_PROCESS_OOM
+
 cdef extern from "include/internal/cef_types_linux.h":
     ctypedef unsigned long cef_window_handle_t
 
