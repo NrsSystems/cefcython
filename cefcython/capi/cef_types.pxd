@@ -147,6 +147,11 @@ cdef extern from "include/internal/cef_types.h":
     ctypedef enum cef_window_open_disposition_t:
         pass
 
+    struct _cef_popup_features_t:
+        pass
+
+    ctypedef _cef_popup_features_t cef_popup_features_t
+
     ctypedef enum cef_termination_status_t:
         TS_ABNORMAL_TERMINATION,
         TS_PROCESS_WAS_KILLED,
