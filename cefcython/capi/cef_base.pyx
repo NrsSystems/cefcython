@@ -71,10 +71,11 @@ cdef int has_at_least_one_ref(cef_base_ref_counted_t *self) with gil:
 
 cdef void cef_base_ref_counted_init(cef_base_ref_counted_t *base):
     if base.size <= 0:
-        printf("FATAL: initiailize_cef_base failed, size member not set\n")
+        printf("[%s(0x%08lx)] FATAL: cef_base_ref_counted_init failed, size member not set\n",
+                _get_base_type_str(base), base)
         exit(1)
 
-    printf('[%s(0x%08lx)] init_cef_base\n', _get_base_type_str(base), base)
+    printf('[%s(0x%08lx)] cef_base_ref_counted_init\n', _get_base_type_str(base), base)
     base.add_ref = add_ref
     base.release = release
     base.has_one_ref = has_one_ref
