@@ -1,8 +1,9 @@
 from libc.stddef cimport size_t
 from cefcython.capi.cef_string cimport cef_string_t
 from cefcython.capi.cef_base cimport cef_base_ref_counted_t
-from cefcython.capi.cef_types cimport cef_process_id_t
+from cefcython.capi.cef_display_handler cimport _cef_display_handler_t
 from cefcython.capi.cef_request_handler cimport _cef_request_handler_t
+from cefcython.capi.cef_types cimport cef_process_id_t
 
 cdef extern from "include/capi/cef_client_capi.h":
     cdef struct _cef_client_t:
@@ -47,9 +48,6 @@ cdef extern from "include/capi/cef_client_capi.h":
         pass
 
     cdef struct _cef_dialog_handler_t:
-        pass
-
-    cdef struct _cef_display_handler_t:
         pass
 
     cdef struct _cef_drag_handler_t:

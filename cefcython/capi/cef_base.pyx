@@ -3,7 +3,8 @@ from libc.stdint cimport uintptr_t
 
 from cefcython.capi cimport (cef_browser_t,
                              cef_app_t,
-                             cef_client_t)
+                             cef_client_t,
+                             cef_display_handler_t)
 
 DEF DEBUG_REFERENCE_COUNTING = 0
 
@@ -13,20 +14,18 @@ cdef size_t sizeof_cef_app_t = sizeof(cef_app_t)
 cdef size_t sizeof_cef_base_ref_counted_t = sizeof(cef_base_ref_counted_t)
 cdef size_t sizeof_cef_browser_t = sizeof(cef_browser_t)
 cdef size_t sizeof_cef_client_t = sizeof(cef_client_t)
+cdef size_t sizeof_cef_display_handler_t = sizeof(cef_display_handler_t)
 #cdef size_t sizeof_cef_v8handler_t = sizeof(cef_v8_handler_t)
 #cdef size_t sizeof_cef_v8value_t = sizeof(cef_v8value_t)
 
 cdef const char *_get_base_type_str(cef_base_ref_counted_t *self) with gil:
-    if not self:
-        return "UNKNOWN"
-    elif self.size == sizeof_cef_app_t:
-        return 'cef_app_t'
-    elif self.size == sizeof_cef_base_ref_counted_t:
-        return 'cef_base_ref_counted_t'
-    elif self.size == sizeof_cef_browser_t:
-        return 'cef_browser_t'
-    elif self.size == sizeof_cef_client_t:
-        return 'cef_client_t'
+    return ('NULL' if not self else
+            'cef_app_t' if self.size == sizeof_cef_app_t else
+            'cef_base_ref_counted_t' if self.size == sizeof_cef_base_ref_counted_t else
+            'cef_browser_t' if self.size == sizeof_cef_browser_t else
+            'cef_client_t' if self.size == sizeof_cef_client_t else
+            'cef_display_handler_t' if self.size == sizeof_cef_display_handler_t else
+            'UNKNOWN')
 
 cdef void add_ref(cef_base_ref_counted_t *self) with gil:
     global _refcounts
