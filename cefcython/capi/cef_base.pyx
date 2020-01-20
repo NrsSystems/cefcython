@@ -4,7 +4,8 @@ from libc.stdint cimport uintptr_t
 from cefcython.capi cimport (cef_browser_t,
                              cef_app_t,
                              cef_client_t,
-                             cef_display_handler_t)
+                             cef_display_handler_t,
+                             cef_life_span_handler_t)
 
 DEF DEBUG_REFERENCE_COUNTING = 0
 
@@ -15,6 +16,7 @@ cdef size_t sizeof_cef_base_ref_counted_t = sizeof(cef_base_ref_counted_t)
 cdef size_t sizeof_cef_browser_t = sizeof(cef_browser_t)
 cdef size_t sizeof_cef_client_t = sizeof(cef_client_t)
 cdef size_t sizeof_cef_display_handler_t = sizeof(cef_display_handler_t)
+cdef size_t sizeof_cef_life_span_handler_t = sizeof(cef_life_span_handler_t)
 #cdef size_t sizeof_cef_v8handler_t = sizeof(cef_v8_handler_t)
 #cdef size_t sizeof_cef_v8value_t = sizeof(cef_v8value_t)
 
@@ -25,6 +27,7 @@ cdef const char *_get_base_type_str(cef_base_ref_counted_t *self) with gil:
             'cef_browser_t' if self.size == sizeof_cef_browser_t else
             'cef_client_t' if self.size == sizeof_cef_client_t else
             'cef_display_handler_t' if self.size == sizeof_cef_display_handler_t else
+            'cef_life_span_handler_t' if self.size == sizeof_cef_life_span_handler_t else
             'UNKNOWN')
 
 cdef void add_ref(cef_base_ref_counted_t *self) with gil:
