@@ -22,6 +22,7 @@ from cefcython.capi.cef_ssl_info cimport *
 from cefcython.capi.cef_string cimport *
 from cefcython.capi.cef_string_list cimport *
 from cefcython.capi.cef_string_multimap cimport *
+from cefcython.capi.cef_string_visitor cimport *
 from cefcython.capi.cef_types cimport *
 from cefcython.capi.cef_values cimport *
 from cefcython.capi.cef_x509_certificate cimport *
