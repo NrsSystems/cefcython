@@ -8,6 +8,7 @@ from cefcython.capi.cef_dom cimport *
 from cefcython.capi.cef_drag_data cimport *
 from cefcython.capi.cef_extension cimport *
 from cefcython.capi.cef_frame cimport *
+from cefcython.capi.cef_load_handler cimport *
 from cefcython.capi.cef_life_span_handler cimport *
 from cefcython.capi.cef_navigation_entry cimport *
 from cefcython.capi.cef_path_util cimport *
