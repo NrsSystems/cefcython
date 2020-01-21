@@ -11,6 +11,7 @@ from cefcython.capi.cef_frame cimport *
 from cefcython.capi.cef_life_span_handler cimport *
 from cefcython.capi.cef_navigation_entry cimport *
 from cefcython.capi.cef_path_util cimport *
+from cefcython.capi.cef_process_message cimport *
 from cefcython.capi.cef_request cimport *
 from cefcython.capi.cef_request_callback cimport *
 from cefcython.capi.cef_request_context cimport *
