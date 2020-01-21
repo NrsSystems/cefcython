@@ -4,6 +4,7 @@ from cefcython.capi.cef_base cimport *
 from cefcython.capi.cef_browser cimport *
 from cefcython.capi.cef_client cimport *
 from cefcython.capi.cef_display_handler cimport *
+from cefcython.capi.cef_dom cimport *
 from cefcython.capi.cef_drag_data cimport *
 from cefcython.capi.cef_extension cimport *
 from cefcython.capi.cef_frame cimport *
