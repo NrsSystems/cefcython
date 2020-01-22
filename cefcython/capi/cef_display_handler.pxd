@@ -34,12 +34,12 @@ cdef extern from "include/capi/cef_display_handler_capi.h":
                                    _cef_browser_t *browser,
                                    const cef_string_t *value)
 
-        void (* on_console_message)(_cef_display_handler_t *self,
-                                    _cef_browser_t *browser,
-                                    cef_log_severity_t level,
-                                    const cef_string_t *message,
-                                    const cef_string_t *source,
-                                    int line)
+        int (* on_console_message)(_cef_display_handler_t *self,
+                                   _cef_browser_t *browser,
+                                   cef_log_severity_t level,
+                                   const cef_string_t *message,
+                                   const cef_string_t *source,
+                                   int line)
 
         int (* on_auto_resize)(_cef_display_handler_t *self,
                                _cef_browser_t *browser,
