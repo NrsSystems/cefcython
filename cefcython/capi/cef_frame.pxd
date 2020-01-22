@@ -29,7 +29,7 @@ cdef extern from "include/capi/cef_frame_capi.h":
         void (* get_text)(_cef_frame_t *self, _cef_string_visitor_t *visitor)
         void (* load_request)(_cef_frame_t *self, _cef_request_t *request)
         void (* load_url)(_cef_frame_t *self, const cef_string_t *url)
-        void (* execute_javascript)(_cef_frame_t *self,
+        void (* execute_java_script)(_cef_frame_t *self,
                                     const cef_string_t *code,
                                     const cef_string_t *script_url,
                                     int start_line)
