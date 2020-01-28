@@ -40,44 +40,57 @@ cdef const char *_get_base_type_str(cef_base_ref_counted_t *self) with gil:
 cdef void add_ref(cef_base_ref_counted_t *self) with gil:
     global _refcounts
     cdef uintptr_t base = <uintptr_t>self
-    printf('[%s(0x%08lx)] add_ref\n', _get_base_type_str(self), base)
+
+    IF DEBUG_REFERENCE_COUNTING:
+        printf('[%s(0x%08lx)] add_ref\n', _get_base_type_str(self), base)
+
     if base not in _refcounts:
         _refcounts[base] = 1
     else:
         _refcounts[base] += 1
     cdef int refcount = _refcounts[base]
-    printf('[%s(0x%08lx)] added_ref: %i\n', _get_base_type_str(self), base, refcount)
+
+    IF DEBUG_REFERENCE_COUNTING:
+        printf('[%s(0x%08lx)] added_ref: %i\n', _get_base_type_str(self), base, refcount)
 
 cdef int release(cef_base_ref_counted_t *self) with gil:
     global _refcounts
     cdef uintptr_t base = <uintptr_t>self
-    printf('[%s(0x%08lx)] release\n', _get_base_type_str(self), base)
+
+    IF DEBUG_REFERENCE_COUNTING:
+        printf('[%s(0x%08lx)] release\n', _get_base_type_str(self), base)
+
     if not base in _refcounts:
-        printf('[%s(0x%08lx)] released: False\n', _get_base_type_str(self), base)
+        IF DEBUG_REFERENCE_COUNTING:
+            printf('[%s(0x%08lx)] released: False\n', _get_base_type_str(self), base)
         return False
 
     cdef int refcount
     if not _refcounts[base] - 1:
         _refcounts.pop(base)
-        printf('[%s(0x%08lx)] released: %i, True\n', _get_base_type_str(self), base, 0)
+        IF DEBUG_REFERENCE_COUNTING:
+            printf('[%s(0x%08lx)] released: %i, True\n', _get_base_type_str(self), base, 0)
         free(self)
         return True
     else:
         _refcounts[base] -=1
         refcount = _refcounts[base]
-        printf('[%s(0x%08lx)] released: %i, False\n', _get_base_type_str(self), base, refcount)
+        IF DEBUG_REFERENCE_COUNTING:
+            printf('[%s(0x%08lx)] released: %i, False\n', _get_base_type_str(self), base, refcount)
         return False
 
 cdef int has_one_ref(cef_base_ref_counted_t *self) with gil:
     cdef uintptr_t base = <uintptr_t>self
     cdef int ret = (_refcounts.get(base, 0) == 1)
-    printf('[%s(0x%08lx)] has_one_ref: %i\n', _get_base_type_str(self), base, ret)
+    IF DEBUG_REFERENCE_COUNTING:
+        printf('[%s(0x%08lx)] has_one_ref: %i\n', _get_base_type_str(self), base, ret)
     return ret
 
 cdef int has_at_least_one_ref(cef_base_ref_counted_t *self) with gil:
     cdef uintptr_t base = <uintptr_t>self
     cdef int ret = (_refcounts.get(base, 0) >= 1)
-    printf('[%s(0x%08lx)] has_at_least_one_ref: %i\n', _get_base_type_str(self), base, ret)
+    IF DEBUG_REFERENCE_COUNTING:
+        printf('[%s(0x%08lx)] has_at_least_one_ref: %i\n', _get_base_type_str(self), base, ret)
     return ret
 
 cdef void cef_base_ref_counted_init(cef_base_ref_counted_t *base):
@@ -86,7 +99,9 @@ cdef void cef_base_ref_counted_init(cef_base_ref_counted_t *base):
                 _get_base_type_str(base), base)
         exit(1)
 
-    printf('[%s(0x%08lx)] cef_base_ref_counted_init\n', _get_base_type_str(base), base)
+    IF DEBUG_REFERENCE_COUNTING:
+        printf('[%s(0x%08lx)] cef_base_ref_counted_init\n', _get_base_type_str(base), base)
+
     base.add_ref = add_ref
     base.release = release
     base.has_one_ref = has_one_ref
