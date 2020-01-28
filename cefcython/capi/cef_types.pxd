@@ -145,6 +145,16 @@ cdef extern from "include/internal/cef_types.h":
         TS_PROCESS_CRASHED,
         TS_PROCESS_OOM
 
+    ctypedef enum cef_thread_id_t:
+        TID_UI,
+        TID_FILE_BACKGROUND,
+        TID_FILE = TID_FILE_BACKGROUND,
+        TID_FILE_USER_VISIBLE,
+        TID_FILE_USER_BLOCKING,
+        TID_PROCESS_LAUNCHER,
+        TID_IO,
+        TID_RENDERER
+
     ctypedef enum cef_transition_type_t:
         pass
 
