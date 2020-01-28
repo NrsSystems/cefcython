@@ -1,5 +1,6 @@
 from libc.stddef cimport size_t
 from libc.stdint cimport uintptr_t
+from libc.stdlib cimport free
 
 from cefcython.capi cimport (cef_browser_t,
                              cef_app_t,
@@ -59,6 +60,7 @@ cdef int release(cef_base_ref_counted_t *self) with gil:
     if not _refcounts[base] - 1:
         _refcounts.pop(base)
         printf('[%s(0x%08lx)] released: %i, True\n', _get_base_type_str(self), base, 0)
+        free(self)
         return True
     else:
         _refcounts[base] -=1
