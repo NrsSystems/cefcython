@@ -10,6 +10,11 @@ from cefcython.capi cimport (cef_browser_t,
                              cef_request_handler_t,
                              cef_resource_request_handler_t)
 
+from cefcython.capi.cef_v8 cimport (cef_v8exception_t,
+                                    cef_v8handler_t,
+                                    cef_v8stack_trace_t,
+                                    cef_v8value_t)
+
 DEF DEBUG_REFERENCE_COUNTING = 0
 
 cdef dict _refcounts = {}
@@ -22,8 +27,10 @@ cdef size_t sizeof_cef_display_handler_t = sizeof(cef_display_handler_t)
 cdef size_t sizeof_cef_life_span_handler_t = sizeof(cef_life_span_handler_t)
 cdef size_t sizeof_cef_request_handler_t = sizeof(cef_request_handler_t)
 cdef size_t sizeof_cef_resource_request_handler_t = sizeof(cef_resource_request_handler_t)
-#cdef size_t sizeof_cef_v8handler_t = sizeof(cef_v8_handler_t)
-#cdef size_t sizeof_cef_v8value_t = sizeof(cef_v8value_t)
+cdef size_t sizeof_cef_v8exception_t = sizeof(cef_v8exception_t)
+cdef size_t sizeof_cef_v8handler_t = sizeof(cef_v8handler_t)
+cdef size_t sizeof_cef_v8stack_trace_t = sizeof(cef_v8stack_trace_t)
+cdef size_t sizeof_cef_v8value_t = sizeof(cef_v8value_t)
 
 cdef const char *_get_base_type_str(cef_base_ref_counted_t *self) with gil:
     return ('NULL' if not self else
@@ -35,6 +42,10 @@ cdef const char *_get_base_type_str(cef_base_ref_counted_t *self) with gil:
             'cef_life_span_handler_t' if self.size == sizeof_cef_life_span_handler_t else
             'cef_request_handler_t' if self.size == sizeof_cef_request_handler_t else
             'cef_resource_request_handler_t' if self.size == sizeof_cef_resource_request_handler_t else
+            'cef_v8exception_t' if self.size == sizeof_cef_v8exception_t else
+            'cef_v8handler_t' if self.size == sizeof_cef_v8handler_t else
+            'cef_v8stack_trace_t' if self.size == sizeof_cef_v8stack_trace_t else
+            'cef_v8value_t' if self.size == sizeof_cef_v8value_t else
             'UNKNOWN')
 
 cdef void add_ref(cef_base_ref_counted_t *self) with gil:
