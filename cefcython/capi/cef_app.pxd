@@ -62,21 +62,3 @@ cdef extern from "include/capi/cef_app_capi.h":
             const _cef_main_args_t *args,
             cef_app_t *application,
             void *windows_sandbox_info)
-
-cdef void on_before_command_line_processing(
-        _cef_app_t *self,
-        const cef_string_t *process_type,
-        _cef_command_line_t *command_line)
-
-cdef void on_register_custom_schemes(
-        _cef_app_t *self,
-        _cef_scheme_registrar_t *registrar)
-
-cdef _cef_resource_bundle_handler_t *get_resource_bundle_handler(
-        _cef_app_t *self)
-
-cdef _cef_browser_process_handler_t *get_browser_process_handler(
-        _cef_app_t *self)
-
-cdef _cef_render_process_handler_t *get_render_process_handler(
-        _cef_app_t *self)
