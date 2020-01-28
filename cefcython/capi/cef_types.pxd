@@ -6,16 +6,6 @@ from cefcython.capi.cef_string cimport cef_string_t
 cdef extern from "include/internal/cef_types.h":
     ctypedef uint32_t cef_color_t
 
-    ctypedef enum cef_state_t:
-        STATE_DEFAULT = 0,
-        STATE_ENABLED,
-        STATE_DISABLED
-
-    cdef struct _cef_pdf_print_settings_t:
-        pass
-
-    ctypedef _cef_pdf_print_settings_t cef_pdf_print_settings_t
-
     cdef struct _cef_browser_settings_t:
         size_t size
         int windowless_frame_rate
@@ -52,16 +42,16 @@ cdef extern from "include/internal/cef_types.h":
 
     ctypedef _cef_browser_settings_t cef_browser_settings_t
 
-    ctypedef enum cef_path_key_t:
-        PK_DIR_CURRENT,
-        PK_DIR_EXE,
-        PK_DIR_MODULE,
-        PK_DIR_TEMP,
-        PK_FILE_EXE,
-        PK_FILE_MODULE,
-        PK_LOCAL_APP_DATA,
-        PK_USER_DATA,
-        PK_DIR_RESOURCES
+    struct _cef_cookie_t:
+        pass
+
+    ctypedef _cef_cookie_t cef_cookie_t
+
+    ctypedef enum cef_errorcode_t:
+        pass
+
+    ctypedef enum cef_file_dialog_mode_t:
+        pass
 
     ctypedef enum cef_log_severity_t:
         LOGSEVERITY_DEFAULT,
@@ -73,8 +63,43 @@ cdef extern from "include/internal/cef_types.h":
         LOGSEVERITY_FATAL,
         LOGSEVERITY_DISABLE=99
 
+    ctypedef enum cef_path_key_t:
+        PK_DIR_CURRENT,
+        PK_DIR_EXE,
+        PK_DIR_MODULE,
+        PK_DIR_TEMP,
+        PK_FILE_EXE,
+        PK_FILE_MODULE,
+        PK_LOCAL_APP_DATA,
+        PK_USER_DATA,
+        PK_DIR_RESOURCES
+
+    cdef struct _cef_pdf_print_settings_t:
+        pass
+
+    ctypedef _cef_pdf_print_settings_t cef_pdf_print_settings_t
+
+    struct _cef_popup_features_t:
+        pass
+
+    ctypedef _cef_popup_features_t cef_popup_features_t
+
+    ctypedef enum cef_postdataelement_type_t:
+        pass
+
     ctypedef enum cef_process_id_t:
         pass
+
+    ctypedef enum cef_referrer_policy_t:
+        pass
+
+    ctypedef enum cef_resource_type_t:
+        pass
+
+    ctypedef enum cef_return_value_t:
+        RV_CANCEL = 0,
+        RV_CONTINUE,
+        RV_CONTINUE_ASYNC
 
     cdef struct _cef_settings_t:
         size_t size
@@ -109,27 +134,18 @@ cdef extern from "include/internal/cef_types.h":
 
     ctypedef _cef_settings_t cef_settings_t
 
-    ctypedef enum cef_file_dialog_mode_t:
-        pass
+    ctypedef enum cef_state_t:
+        STATE_DEFAULT = 0,
+        STATE_ENABLED,
+        STATE_DISABLED
 
-    ctypedef enum cef_referrer_policy_t:
-        pass
-
-    ctypedef enum cef_resource_type_t:
-        pass
+    ctypedef enum cef_termination_status_t:
+        TS_ABNORMAL_TERMINATION,
+        TS_PROCESS_WAS_KILLED,
+        TS_PROCESS_CRASHED,
+        TS_PROCESS_OOM
 
     ctypedef enum cef_transition_type_t:
-        pass
-
-    ctypedef enum cef_postdataelement_type_t:
-        pass
-
-    struct _cef_cookie_t:
-        pass
-
-    ctypedef _cef_cookie_t cef_cookie_t
-
-    ctypedef enum cef_errorcode_t:
         pass
 
     ctypedef enum cef_urlrequest_status_t:
@@ -139,26 +155,51 @@ cdef extern from "include/internal/cef_types.h":
         UR_CANCELED,
         UR_FAILED
 
-    ctypedef enum cef_return_value_t:
-        RV_CANCEL = 0,
-        RV_CONTINUE,
-        RV_CONTINUE_ASYNC
-
     ctypedef enum cef_window_open_disposition_t:
         pass
 
-    struct _cef_popup_features_t:
+cdef extern from "include/internal/cef_types_linux.h":
+    cdef struct _cef_composition_underline_t:
         pass
 
-    ctypedef _cef_popup_features_t cef_popup_features_t
+    ctypedef _cef_composition_underline_t cef_composition_underline_t
 
-    ctypedef enum cef_termination_status_t:
-        TS_ABNORMAL_TERMINATION,
-        TS_PROCESS_WAS_KILLED,
-        TS_PROCESS_CRASHED,
-        TS_PROCESS_OOM
+    ctypedef enum cef_drag_operations_mask_t:
+        pass
 
-cdef extern from "include/internal/cef_types_linux.h":
+    cdef struct _cef_key_event_t:
+        pass
+
+    ctypedef _cef_key_event_t cef_key_event_t
+
+    cdef struct _cef_mouse_event_t:
+        pass
+
+    ctypedef _cef_mouse_event_t cef_mouse_event_t
+
+    ctypedef enum cef_paint_element_type_t:
+        pass
+
+    cdef struct _cef_point_t:
+        pass
+
+    ctypedef _cef_point_t cef_point_t
+
+    cdef struct _cef_range_t:
+        pass
+
+    ctypedef _cef_range_t cef_range_t
+
+    cdef struct _cef_size_t:
+        pass
+
+    ctypedef _cef_size_t cef_size_t
+
+    cdef struct _cef_touch_event_t:
+        pass
+
+    ctypedef _cef_touch_event_t cef_touch_event_t
+
     ctypedef unsigned long cef_window_handle_t
 
     cdef struct _cef_window_info_t:
@@ -176,45 +217,3 @@ cdef extern from "include/internal/cef_types_linux.h":
         cef_window_handle_t window
 
     ctypedef _cef_window_info_t cef_window_info_t
-
-    cdef struct _cef_point_t:
-        pass
-
-    ctypedef _cef_point_t cef_point_t
-
-    ctypedef enum cef_paint_element_type_t:
-        pass
-
-    cdef struct _cef_key_event_t:
-        pass
-
-    ctypedef _cef_key_event_t cef_key_event_t
-
-    cdef struct _cef_mouse_event_t:
-        pass
-
-    ctypedef _cef_mouse_event_t cef_mouse_event_t
-
-    cdef struct _cef_composition_underline_t:
-        pass
-
-    ctypedef _cef_composition_underline_t cef_composition_underline_t
-
-    cdef struct _cef_range_t:
-        pass
-
-    ctypedef _cef_range_t cef_range_t
-
-    cdef struct _cef_size_t:
-        pass
-
-    ctypedef _cef_size_t cef_size_t
-
-    ctypedef enum cef_drag_operations_mask_t:
-        pass
-
-    cdef struct _cef_touch_event_t:
-        pass
-
-    ctypedef _cef_touch_event_t cef_touch_event_t
-
