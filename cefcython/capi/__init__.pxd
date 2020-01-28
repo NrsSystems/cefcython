@@ -28,6 +28,7 @@ from cefcython.capi.cef_string_list cimport *
 from cefcython.capi.cef_string_multimap cimport *
 from cefcython.capi.cef_string_visitor cimport *
 from cefcython.capi.cef_task cimport *
+from cefcython.capi.cef_time cimport *
 from cefcython.capi.cef_types cimport *
 from cefcython.capi.cef_urlrequest cimport *
 from cefcython.capi.cef_v8 cimport *
