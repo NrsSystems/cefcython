@@ -3,6 +3,8 @@ from libc.stddef cimport size_t
 from cefcython.capi.cef_string_types cimport (_cef_string_utf16_t,
                                               cef_string_utf8_t,
                                               cef_string_utf16_t,
+                                              cef_string_userfree_utf16_alloc,
+                                              cef_string_userfree_utf16_free,
                                               cef_string_userfree_utf16_t,
                                               char16)
 

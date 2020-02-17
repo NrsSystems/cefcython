@@ -27,3 +27,11 @@ cdef extern from "include/internal/cef_string_types.h":
     ctypedef cef_string_wide_t *cef_string_userfree_wide_t
     ctypedef cef_string_utf8_t *cef_string_userfree_utf8_t
     ctypedef cef_string_utf16_t *cef_string_userfree_utf16_t
+
+    cef_string_userfree_wide_t *cef_string_userfree_wide_alloc()
+    cef_string_userfree_utf8_t *cef_string_userfree_utf8_alloc()
+    cef_string_userfree_utf16_t *cef_string_userfree_utf16_alloc()
+
+    void cef_string_userfree_wide_free(cef_string_userfree_wide_t str)
+    void cef_string_userfree_utf8_free(cef_string_userfree_utf8_t str)
+    void cef_string_userfree_utf16_free(cef_string_userfree_utf16_t str)
