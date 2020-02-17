@@ -49,7 +49,7 @@ cdef extern from "include/capi/cef_v8_capi.h":
 
     ctypedef _cef_v8context_t cef_v8context_t
 
-    cef_v8context_t cef_v8context_get_current_context()
+    cef_v8context_t *cef_v8context_get_current_context()
     cef_v8context_t *cef_v8context_get_entered_context()
     int cef_v8context_in_context()
 
