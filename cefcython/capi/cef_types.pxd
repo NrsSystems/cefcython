@@ -187,6 +187,17 @@ cdef extern from "include/internal/cef_types.h":
         V8_PROPERTY_ATTRIBUTE_DONTENUM = 1 << 1,
         V8_PROPERTY_ATTRIBUTE_DONTDELETE = 1 << 2
 
+    ctypedef enum cef_value_type_t:
+        VTYPE_INVALID = 0,
+        VTYPE_NULL,
+        VTYPE_BOOL,
+        VTYPE_INT,
+        VTYPE_DOUBLE,
+        VTYPE_STRING,
+        VTYPE_BINARY,
+        VTYPE_DICTIONARY,
+        VTYPE_LIST
+
     ctypedef enum cef_window_open_disposition_t:
         pass
 
