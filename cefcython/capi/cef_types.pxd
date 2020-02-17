@@ -96,7 +96,8 @@ cdef extern from "include/internal/cef_types.h":
         pass
 
     ctypedef enum cef_process_id_t:
-        pass
+        PID_BROWSER,
+        PID_RENDERER
 
     ctypedef enum cef_referrer_policy_t:
         pass
