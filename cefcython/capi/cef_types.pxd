@@ -53,6 +53,14 @@ cdef extern from "include/internal/cef_types.h":
     ctypedef enum cef_file_dialog_mode_t:
         pass
 
+    ctypedef enum cef_key_event_type_t:
+        pass
+
+    struct _cef_key_event_t:
+        pass
+
+    ctypedef _cef_key_event_t cef_key_event_t
+
     ctypedef enum cef_log_severity_t:
         LOGSEVERITY_DEFAULT,
         LOGSEVERITY_VERBOSE,
@@ -189,11 +197,6 @@ cdef extern from "include/internal/cef_types_linux.h":
 
     ctypedef enum cef_drag_operations_mask_t:
         pass
-
-    cdef struct _cef_key_event_t:
-        pass
-
-    ctypedef _cef_key_event_t cef_key_event_t
 
     cdef struct _cef_mouse_event_t:
         pass
