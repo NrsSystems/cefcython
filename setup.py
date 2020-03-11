@@ -5,86 +5,122 @@ from setuptools.extension import Extension
 
 from Cython.Build import cythonize
 
+import cefcython
 import os
 import subprocess
+import tarfile
 
 ROOT_DIR = os.path.abspath(os.path.dirname(__file__))
-
-include_dirs=[
-    os.path.join(ROOT_DIR, os.path.join('cefcython', 'build')),
-]
+DEBUG = os.environ.get('CEF_DEBUG', False)
 
 extensions = [
     Extension(
         'cefcython.capi.*',
         ['cefcython/capi/*.pyx'],
-        include_dirs=include_dirs,
+        include_dirs=cefcython.get_include_dirs(),
     ),
     Extension(
         'cefcython.util.*',
         ['cefcython/util/*.pyx'],
-        include_dirs=include_dirs,
+        include_dirs=cefcython.get_include_dirs(),
     ),
 ]
 
 package_data={
     'cefcython.capi': ['*.pxd'],
     'cefcython.util': ['*.pxd'],
-    'cefcython.build': ['**/*.h'],
+    'cefcython.build': [
+        'include/*.h',
+        'include/capi/*.h',
+        'include/internal/*.h',
+        'include/base/*.h',
+        'include/base/internal/*.h',
+    ],
 }
 
-class BuildSubprocessCommand(Command):
+class ExtractCEFCommand(Command):
+    description = 'extract CEF from binary distribution'
+
     def initialize_options(self):
         self.build_lib = None
         self.build_temp = None
-        self.force = None
-
-    def finalize_options(self):
-        self.set_undefined_options('build',
-                                   ('build_lib', 'build_lib'),
-                                   ('build_temp', 'build_temp'),
-                                   ('force', 'force'))
-
-    def copy_src(self):
-        self.copy_tree('src', os.path.join(self.build_temp, 'src'))
-
-    def build(self):
-        subprocess_dir = os.path.join(self.build_temp, os.path.join('src', 'subprocess'))
-        cmd = ['make', '-C', subprocess_dir, 'CEF_INCLUDE={}'.format(os.path.join(ROOT_DIR, os.path.join('cefcython', 'build')))]
-        if self.force:
-            cmd += ['clean', 'all']
-        subprocess.check_call(cmd)
-        self.copy_file(os.path.join(subprocess_dir, 'subprocess'),
-                       os.path.join(self.build_lib, os.path.join('cefcython', 'subprocess')))
-
-    def run(self):
-        self.copy_src()
-        self.build()
-
-class BuildCEFCommand(Command):
-    def initialize_options(self):
-        self.build_lib = None
-        self.build_temp = None
+        self.cef_dist = os.environ.get('CEF_DIST', '')
+        self.cef_dist_name = None
 
     def finalize_options(self):
         self.set_undefined_options('build',
                                    ('build_lib', 'build_lib'),
                                    ('build_temp', 'build_temp'))
 
-    def build(self):
-        self.copy_tree(
-            os.path.join(ROOT_DIR, 'cef'),
-            os.path.join(self.build_lib, os.path.join('cefcython', 'cef'))
-        )
+        assert os.path.exists(self.cef_dist), 'CEF dist {} does not exist'.format(self.cef_dist)
+
+        self.cef_dist_name = os.path.basename(self.cef_dist).split('.tar')[0]
 
     def run(self):
-        self.build()
+        with tarfile.open(self.cef_dist, 'r') as tf:
+            tf.extractall(path=self.build_temp)
+
+class InstallCEFCommand(Command):
+    description = 'install CEF from extracted distribution'
+
+    def initialize_options(self):
+        self.build_lib = None
+        self.build_temp = None
+        self.cef_dist_name = None
+        self.include_dirs = None
+
+    def finalize_options(self):
+        self.set_undefined_options('build',
+                                   ('build_lib', 'build_lib'),
+                                   ('build_temp', 'build_temp'))
+        self.set_undefined_options('extract_cef',
+                                   ('cef_dist_name', 'cef_dist_name'))
+
+    def install(self):
+        global DEBUG
+        cef_path = os.path.join(self.build_temp, self.cef_dist_name)
+        for install_dir, dest in [('Release' if not DEBUG else 'Debug', '.'), ('Resources', '.')]:
+            self.copy_tree(
+                os.path.join(os.path.join(cef_path, install_dir)),
+                os.path.join(self.build_lib, os.path.join(os.path.join('cefcython', 'cef'), dest))
+            )
+
+    def run(self):
+        self.install()
+
+class StripCEFBinariesCommand(Command):
+    description = 'strip installed binaries'
+
+    def initialize_options(self):
+        self.build_temp = None
+        self.cef_dist_name = None
+
+    def finalize_options(self):
+        self.set_undefined_options('build',
+                                   ('build_temp', 'build_temp'))
+        self.set_undefined_options('extract_cef',
+                                   ('cef_dist_name', 'cef_dist_name'))
+
+    def run(self):
+        cef_path = os.path.join(self.build_temp, self.cef_dist_name)
+        for dirpath, dirnames, filenames in os.walk(cef_path):
+            for filename in filenames:
+                try:
+                    cmd = ['strip', os.path.join(dirpath, filename)]
+                    subprocess.check_call(cmd, stderr=subprocess.DEVNULL)
+                except subprocess.CalledProcessError:
+                    pass
+                else:
+                    self.announce('Stripped {}'.format(filename), level=2)
+
 
 class BuildCommand(build):
     def run(self):
+        self.run_command('extract_cef')
+        if not DEBUG:
+            self.run_command('strip_cef_binaries')
+        self.run_command('install_cef')
         build.run(self)
-        self.run_command('build_subprocess')
-        self.run_command('build_cef')
 
 from cefcython import __version__ as version
 
@@ -97,11 +133,12 @@ setup(
     install_requires=['cython'],
     packages=find_packages(),
     package_data=package_data,
-    ext_modules=cythonize(extensions),
+    ext_modules=cythonize(extensions, gdb_debug=DEBUG),
     zip_safe=False,
     cmdclass={
         'build': BuildCommand,
-        'build_subprocess': BuildSubprocessCommand,
-        'build_cef': BuildCEFCommand,
+        'extract_cef': ExtractCEFCommand,
+        'install_cef': InstallCEFCommand,
+        'strip_cef_binaries': StripCEFBinariesCommand,
     }
 )
