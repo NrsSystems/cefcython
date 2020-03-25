@@ -1,5 +1,6 @@
 from libc.stddef cimport size_t
 
+from cefcython.capi.cef_command_line cimport _cef_command_line_t
 from cefcython.capi.cef_string cimport cef_string_t
 from cefcython.capi.cef_types cimport _cef_settings_t
 from cefcython.capi.cef_base cimport cef_base_ref_counted_t
@@ -12,9 +13,6 @@ cdef extern from "include/internal/cef_types_linux.h":
     ctypedef _cef_main_args_t cef_main_args_t
 
 cdef extern from "include/capi/cef_app_capi.h":
-    struct _cef_command_line_t:
-        pass
-
     struct _cef_scheme_registrar_t:
         pass
 
