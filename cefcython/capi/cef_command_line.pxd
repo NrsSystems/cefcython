@@ -32,8 +32,8 @@ cdef extern from "include/capi/cef_command_line_capi.h":
         int (* has_arguments)(_cef_command_line_t *self)
         void (* get_arguments)(_cef_command_line_t *self,
                                cef_string_list_t arguments)
-        void (* append_argument)()(_cef_command_line_t *self,
-                                   const cef_string_t *argument)
+        void (* append_argument)(_cef_command_line_t *self,
+                                 const cef_string_t *argument)
         void (* prepend_wrapper)(_cef_command_line_t *self,
                                  const cef_string_t *wrapper)
 

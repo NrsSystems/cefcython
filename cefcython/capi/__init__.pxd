@@ -26,6 +26,7 @@ from cefcython.capi.cef_resource_request_handler cimport *
 from cefcython.capi.cef_ssl_info cimport *
 from cefcython.capi.cef_string cimport *
 from cefcython.capi.cef_string_list cimport *
+from cefcython.capi.cef_string_map cimport *
 from cefcython.capi.cef_string_multimap cimport *
 from cefcython.capi.cef_string_visitor cimport *
 from cefcython.capi.cef_task cimport *
