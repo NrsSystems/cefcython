@@ -1,4 +1,7 @@
 from cefcython.capi.cef_base cimport cef_base_ref_counted_t
+from cefcython.capi.cef_string cimport cef_string_t, cef_string_userfree_t
+from cefcython.capi.cef_string_list cimport cef_string_list_t
+from cefcython.capi.cef_string_map cimport cef_string_map_t
 
 cdef extern from "include/capi/cef_command_line_capi.h":
     cdef struct _cef_command_line_t:
