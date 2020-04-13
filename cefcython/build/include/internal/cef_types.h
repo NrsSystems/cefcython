@@ -725,6 +725,11 @@ typedef struct _cef_urlparts_t {
   // Query string component (i.e., everything following the '?').
   ///
   cef_string_t query;
+
+  ///
+  // Fragment (hash) identifier component (i.e., the string following the '#').
+  ///
+  cef_string_t fragment;
 } cef_urlparts_t;
 
 ///
@@ -1775,6 +1780,7 @@ typedef enum {
   EVENTFLAG_IS_KEY_PAD = 1 << 9,
   EVENTFLAG_IS_LEFT = 1 << 10,
   EVENTFLAG_IS_RIGHT = 1 << 11,
+  EVENTFLAG_ALTGR_DOWN = 1 << 12,
 } cef_event_flags_t;
 
 ///
@@ -2293,20 +2299,9 @@ typedef enum {
   UU_URL_SPECIAL_CHARS_EXCEPT_PATH_SEPARATORS = 1 << 3,
 
   ///
-  // Unescapes characters that can be used in spoofing attempts (such as LOCK)
-  // and control characters (such as BiDi control characters and %01).  This
-  // INCLUDES NULLs.  This is used for rare cases such as data: URL decoding
-  // where the result is binary data.
-  //
-  // DO NOT use UU_SPOOFING_AND_CONTROL_CHARS if the URL is going to be
-  // displayed in the UI for security reasons.
-  ///
-  UU_SPOOFING_AND_CONTROL_CHARS = 1 << 4,
-
-  ///
   // URL queries use "+" for space. This flag controls that replacement.
   ///
-  UU_REPLACE_PLUS_WITH_SPACE = 1 << 5,
+  UU_REPLACE_PLUS_WITH_SPACE = 1 << 4,
 } cef_uri_unescape_rule_t;
 
 ///
@@ -2927,6 +2922,16 @@ typedef enum {
 } cef_cdm_registration_error_t;
 
 ///
+// Composition underline style.
+///
+typedef enum {
+  CEF_CUS_SOLID,
+  CEF_CUS_DOT,
+  CEF_CUS_DASH,
+  CEF_CUS_NONE,
+} cef_composition_underline_style_t;
+
+///
 // Structure representing IME composition underline information. This is a thin
 // wrapper around Blink's WebCompositionUnderline class and should be kept in
 // sync with that.
@@ -2951,7 +2956,42 @@ typedef struct _cef_composition_underline_t {
   // Set to true (1) for thick underline.
   ///
   int thick;
+
+  ///
+  // Style.
+  ///
+  cef_composition_underline_style_t style;
 } cef_composition_underline_t;
+
+///
+// Result codes for CefMediaRouter::CreateRoute. These constants match
+// their equivalents in Chromium's route_request_result.h and should not be
+// renumbered.
+///
+typedef enum {
+  CEF_MRCR_UNKNOWN_ERROR = 0,
+  CEF_MRCR_OK = 1,
+  CEF_MRCR_TIMED_OUT = 2,
+  CEF_MRCR_ROUTE_NOT_FOUND = 3,
+  CEF_MRCR_SINK_NOT_FOUND = 4,
+  CEF_MRCR_INVALID_ORIGIN = 5,
+  CEF_MRCR_NO_SUPPORTED_PROVIDER = 7,
+  CEF_MRCR_CANCELLED = 8,
+  CEF_MRCR_ROUTE_ALREADY_EXISTS = 9,
+
+  CEF_MRCR_TOTAL_COUNT = 11  // The total number of values.
+} cef_media_route_create_result_t;
+
+///
+// Connection state for a MediaRoute object.
+///
+typedef enum {
+  CEF_MRCS_UNKNOWN,
+  CEF_MRCS_CONNECTING,
+  CEF_MRCS_CONNECTED,
+  CEF_MRCS_CLOSED,
+  CEF_MRCS_TERMINATED,
+} cef_media_route_connection_state_t;
 
 #ifdef __cplusplus
 }
