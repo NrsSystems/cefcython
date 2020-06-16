@@ -17,12 +17,10 @@ extensions = [
     Extension(
         'cefcython.capi.*',
         ['cefcython/capi/*.pyx'],
-        include_dirs=cefcython.get_include_dirs(),
     ),
     Extension(
         'cefcython.util.*',
         ['cefcython/util/*.pyx'],
-        include_dirs=cefcython.get_include_dirs(),
     ),
 ]
 
@@ -84,6 +82,19 @@ class InstallCEFCommand(Command):
                                    ('build_temp', 'build_temp'))
         self.set_undefined_options('extract_cef',
                                    ('cef_dist_name', 'cef_dist_name'))
+
+        self.install_headers()
+
+    def install_headers(self):
+        cef_path = os.path.join(self.build_temp, self.cef_dist_name)
+        package_dir = os.path.join(self.build_lib, 'cefcython')
+        include_path = os.path.join(package_dir,
+                                    os.path.join(os.path.join('build', 'include')))
+        self.copy_tree(os.path.join(cef_path, 'include'),
+                       include_path)
+
+        for ext in self.distribution.ext_modules:
+            ext.include_dirs.append(os.path.dirname(include_path))
 
     def install(self):
         global DEBUG
