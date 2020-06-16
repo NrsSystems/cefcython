@@ -38,13 +38,23 @@ package_data={
     ],
 }
 
+def get_cef_dist_path():
+    return os.environ.get('CEF_DIST', '')
+
+def get_cef_dist_name(cef_dist_path=None):
+    return os.path.basename(cef_dist_path or get_cef_dist_path()).split('.tar')[0]
+
+def get_cef_version():
+    return get_cef_dist_name().split('cef_binary_')[1].split('+')[0]
+
+
 class ExtractCEFCommand(Command):
     description = 'extract CEF from binary distribution'
 
     def initialize_options(self):
         self.build_lib = None
         self.build_temp = None
-        self.cef_dist = os.environ.get('CEF_DIST', '')
+        self.cef_dist = get_cef_dist_path()
         self.cef_dist_name = None
 
     def finalize_options(self):
@@ -53,8 +63,7 @@ class ExtractCEFCommand(Command):
                                    ('build_temp', 'build_temp'))
 
         assert os.path.exists(self.cef_dist), 'CEF dist {} does not exist'.format(self.cef_dist)
-
-        self.cef_dist_name = os.path.basename(self.cef_dist).split('.tar')[0]
+        self.cef_dist_name = get_cef_dist_name(self.cef_dist)
 
     def run(self):
         with tarfile.open(self.cef_dist, 'r') as tf:
@@ -122,11 +131,9 @@ class BuildCommand(build):
         self.run_command('install_cef')
         build.run(self)
 
-from cefcython import __version__ as version
-
 setup(
     name='cefcython',
-    version=version,
+    version=get_cef_version(),
     author='Joseph Kogut',
     author_email='joseph.kogut@gmail.com',
     description='Cython bindings for CEF',

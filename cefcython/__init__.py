@@ -1,5 +1,3 @@
-__version__ = '81.3.8'
-
 import os
 
 PACKAGE_DIR = os.path.abspath(os.path.dirname(__file__))
