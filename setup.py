@@ -122,11 +122,17 @@ class StripCEFBinariesCommand(Command):
                                    ('cef_dist_name', 'cef_dist_name'))
 
     def run(self):
+        if sysconfig.get_platform() == 'linux-x86_64':
+            strip = 'strip'
+        else:
+            multiarch = sysconfig.get_config_var('MULTIARCH')
+            strip = f'{multiarch}-strip'
+
         cef_path = os.path.join(self.build_temp, self.cef_dist_name)
         for dirpath, dirnames, filenames in os.walk(cef_path):
             for filename in filenames:
                 try:
-                    cmd = ['strip', os.path.join(dirpath, filename)]
+                    cmd = [strip, os.path.join(dirpath, filename)]
                     subprocess.check_call(cmd, stderr=subprocess.DEVNULL)
                 except subprocess.CalledProcessError:
                     pass
