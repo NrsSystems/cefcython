@@ -102,6 +102,16 @@ cdef extern from "include/internal/cef_types.h":
     ctypedef enum cef_referrer_policy_t:
         pass
 
+    struct _cef_request_context_settings_t:
+        size_t size
+        cef_string_t cache_path
+        int persist_session_cookies
+        int persist_user_preferences
+        int ignore_certificate_errors
+        cef_string_t accept_language_list
+
+    ctypedef _cef_request_context_settings_t cef_request_context_settings_t
+
     ctypedef enum cef_resource_type_t:
         pass
 
