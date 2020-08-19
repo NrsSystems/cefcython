@@ -72,6 +72,12 @@ cdef extern from "include/internal/cef_types.h":
     ctypedef enum cef_errorcode_t:
         pass
 
+    ctypedef enum cef_duplex_mode_t:
+        DUPLEX_MODE_UNKNOWN = -1,
+        DUPLEX_MODE_SIMPLEX,
+        DUPLEX_MODE_LONG_EDGE,
+        DUPLEX_MODE_SHORT_EDGE,
+
     ctypedef enum cef_file_dialog_mode_t:
         pass
 
