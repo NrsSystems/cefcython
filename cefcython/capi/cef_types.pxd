@@ -153,6 +153,12 @@ cdef extern from "include/internal/cef_types.h":
 
     ctypedef _cef_settings_t cef_settings_t
 
+    struct _cef_size_t:
+        int width
+        int height
+
+    ctypedef _cef_size_t cef_size_t
+
     ctypedef enum cef_state_t:
         STATE_DEFAULT = 0,
         STATE_ENABLED,
@@ -237,11 +243,6 @@ cdef extern from "include/internal/cef_types_linux.h":
         pass
 
     ctypedef _cef_range_t cef_range_t
-
-    cdef struct _cef_size_t:
-        pass
-
-    ctypedef _cef_size_t cef_size_t
 
     cdef struct _cef_touch_event_t:
         pass
