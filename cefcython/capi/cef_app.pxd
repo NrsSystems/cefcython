@@ -1,4 +1,5 @@
 from cefcython.capi.cef_base cimport cef_base_ref_counted_t
+from cefcython.capi.cef_browser_process_handler cimport _cef_browser_process_handler_t
 from cefcython.capi.cef_command_line cimport _cef_command_line_t
 from cefcython.capi.cef_resource_bundle_handler cimport _cef_resource_bundle_handler_t
 from cefcython.capi.cef_scheme cimport _cef_scheme_registrar_t
@@ -15,9 +16,6 @@ cdef extern from "include/internal/cef_types_linux.h":
     ctypedef _cef_main_args_t cef_main_args_t
 
 cdef extern from "include/capi/cef_app_capi.h":
-    struct _cef_browser_process_handler_t:
-        pass
-
     struct _cef_render_process_handler_t:
         pass
 
