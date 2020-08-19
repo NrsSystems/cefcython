@@ -2,13 +2,13 @@ from libc.stddef cimport size_t
 from libc.stdint cimport uintptr_t
 from libc.stdlib cimport free
 
-from cefcython.capi cimport (cef_browser_t,
-                             cef_app_t,
-                             cef_client_t,
-                             cef_display_handler_t,
-                             cef_life_span_handler_t,
-                             cef_request_handler_t,
-                             cef_resource_request_handler_t)
+from cefcython.capi.cef_browser cimport cef_browser_t
+from cefcython.capi.cef_app cimport cef_app_t
+from cefcython.capi.cef_client cimport cef_client_t
+from cefcython.capi.cef_display_handler cimport cef_display_handler_t
+from cefcython.capi.cef_life_span_handler cimport cef_life_span_handler_t
+from cefcython.capi.cef_request_handler cimport cef_request_handler_t
+from cefcython.capi.cef_resource_request_handler cimport cef_resource_request_handler_t
 
 from cefcython.capi.cef_v8 cimport (cef_v8exception_t,
                                     cef_v8handler_t,

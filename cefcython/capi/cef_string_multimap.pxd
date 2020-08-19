@@ -1,6 +1,6 @@
 from libc.stddef cimport size_t
 
-from cefcython.capi cimport cef_string_t
+from cefcython.capi.cef_string cimport cef_string_t
 
 cdef extern from "include/internal/cef_string_multimap.h":
     ctypedef void *cef_string_multimap_t
