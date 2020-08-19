@@ -8,6 +8,7 @@ from Cython.Build import cythonize
 import cefcython
 import os
 import subprocess
+import sysconfig
 import tarfile
 
 ROOT_DIR = os.path.abspath(os.path.dirname(__file__))
