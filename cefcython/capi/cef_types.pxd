@@ -99,6 +99,14 @@ cdef extern from "include/internal/cef_types.h":
         PID_BROWSER,
         PID_RENDERER
 
+    struct _cef_rect_t:
+        int x
+        int y
+        int width
+        int height
+
+    ctypedef _cef_rect_t cef_rect_t
+
     ctypedef enum cef_referrer_policy_t:
         pass
 
