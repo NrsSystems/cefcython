@@ -104,7 +104,7 @@ cdef extern from "include/capi/cef_v8_capi.h":
         uint32_t (* get_uint_value)(_cef_v8value_t *self)
         double (* get_double_value)(_cef_v8value_t *self)
         cef_time_t (* get_date_value)(_cef_v8value_t *self)
-        cef_string_userfree_t *(* get_string_value)(_cef_v8value_t *self)
+        cef_string_userfree_t (* get_string_value)(_cef_v8value_t *self)
         int (* is_user_created)(_cef_v8value_t *self)
         int (* has_exception)(_cef_v8value_t *self)
         _cef_v8exception_t (* get_exception)(_cef_v8value_t *self)
