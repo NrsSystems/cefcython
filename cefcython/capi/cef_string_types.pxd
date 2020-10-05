@@ -35,3 +35,7 @@ cdef extern from "include/internal/cef_string_types.h":
     void cef_string_userfree_wide_free(cef_string_userfree_wide_t str)
     void cef_string_userfree_utf8_free(cef_string_userfree_utf8_t str)
     void cef_string_userfree_utf16_free(cef_string_userfree_utf16_t str)
+
+    int cef_string_wide_set(const wchar_t *src, size_t src_len, cef_string_wide_t *output, int copy)
+    int cef_string_utf8_set(const char *src, size_t src_len, cef_string_utf8_t *output, int copy)
+    int cef_string_utf16_set(const char16 *src, size_t src_len, cef_string_utf16_t *output, int copy)
